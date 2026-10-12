@@ -1,0 +1,825 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Psico. Allison Rios | Psicología Clínica & Bienestar</title>
+  <meta name="description" content="Sitio web oficial de la Psicóloga Allison Rios. Terapia individual, terapia de parejas, evaluación psicológica, talleres vivenciales y la Caja de la Calma.">
+  
+  <!-- Tipografías de Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Playfair+Display:ital,wght@0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- Hojas de Estilo -->
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- BROWSER MOCKUP CHROME BAR (Fiel a la cabecera de los wireframes) -->
+  <div class="browser-chrome">
+    <div class="browser-buttons">
+      <button class="browser-btn" title="Atrás" onclick="history.back()">←</button>
+      <button class="browser-btn" title="Adelante" onclick="history.forward()">→</button>
+      <button class="browser-btn" title="Cerrar">✕</button>
+      <button class="browser-btn" title="Inicio" data-view-target="view-home">⌂</button>
+    </div>
+    <div class="browser-address-bar">
+      <span id="browser-address-text">https://psicoallisonrios.com/home</span>
+      <span class="browser-search-icon">🔍</span>
+    </div>
+  </div>
+
+  <!-- HEADER PRINCIPAL DEL SITIO (Idéntico en los 4 wireframes) -->
+  <header class="site-header">
+    <div class="container header-inner">
+      <!-- Marca / Logo -->
+      <a href="#home" class="brand-logo" data-view-target="view-home">
+        <div class="brand-icon">🌿</div>
+        <div>
+          <div class="brand-title">Psico. Allison Rios</div>
+          <span class="brand-subtitle">Psicología Clínica &middot;</span>
+        </div>
+      </a>
+
+      <!-- Navegación estilo botones Wireframe -->
+      <nav class="main-nav">
+        <button class="nav-link-btn active" data-view-target="view-home">Home</button>
+        <button class="nav-link-btn" data-view-target="view-servicios">Productos y Servicios</button>
+        <button class="nav-link-btn" data-view-target="view-conoce">Conoce a tu Psicóloga</button>
+        <button class="nav-link-btn highlight" data-view-target="view-agenda">Agenda tu Cita</button>
+        
+        <!-- Botón de Carrito -->
+        <button class="cart-toggle-btn" id="header-cart-toggle" title="Ver carrito">
+          🛒 Carrito <span class="cart-badge" id="cart-counter-badge">0</span>
+        </button>
+      </nav>
+
+      <!-- Toggle Móvil -->
+      <button class="mobile-nav-toggle" id="mobile-nav-toggle" aria-label="Abrir menú">☰</button>
+    </div>
+
+    <!-- Menú desplegable móvil -->
+    <div class="mobile-menu-drawer" id="mobile-nav-drawer" style="display: none;">
+      <button class="nav-link-btn active" data-view-target="view-home">Home</button>
+      <button class="nav-link-btn" data-view-target="view-servicios">Productos y Servicios</button>
+      <button class="nav-link-btn" data-view-target="view-conoce">Conoce a tu Psicóloga</button>
+      <button class="nav-link-btn highlight" data-view-target="view-agenda">Agenda tu Cita</button>
+    </div>
+  </header>
+
+  <!-- BARRA DE ACCESO DIRECTO RÁPIDO ENTRE WIREFRAMES -->
+  <div class="view-tabs-indicator">
+    <div class="container view-tabs-inner">
+      <div class="quick-view-pills">
+        <button class="quick-pill active" data-view-target="view-home">Home</button>
+        <button class="quick-pill" data-view-target="view-servicios">Productos y Servicios</button>
+        <button class="quick-pill" data-view-target="view-conoce">Conoce a tu Psicóloga</button>
+        <button class="quick-pill" data-view-target="view-agenda">Agenda tu Cita</button>
+      </div>
+    </div>
+  </div>
+
+  <main>
+    <!-- ====================================================================
+         VISTA 1: HOME (Wireframe 4)
+         ==================================================================== -->
+    <section class="page-view active-view" id="view-home">
+      <div class="container">
+        
+        <!-- HERO SECTION (Avatar/intro izquierda, Gran Banner derecha) -->
+        <div class="home-hero-grid">
+          <!-- Columna Izquierda: Retrato + Breve Resumen -->
+          <div class="home-hero-left">
+            <div class="wireframe-box home-avatar-card">
+              <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=800&q=80" alt="Psico. Allison Rios" class="wireframe-box-image">
+            </div>
+            <div class="home-bio-summary">
+              <p>
+                <strong>¡Hola! Soy Allison Rios</strong>, psicóloga clínica con enfoque cognitivo-conductual y contextual. Te acompaño a construir un espacio de calma, autoconocimiento y herramientas prácticas para tu salud mental.
+              </p>
+              <p style="margin-top: 0.5rem; font-size: 0.88rem; color: #64748b;">
+                ✦ Atención en Miraflores y Modalidad Online a todo el Perú y el mundo.
+              </p>
+            </div>
+          </div>
+
+          <!-- Columna Derecha: Banner Principal -->
+          <div class="home-hero-right">
+            <div class="wireframe-box home-main-banner">
+              <div class="banner-content-overlay">
+                <span class="hero-tag">Psicoterapia Especializada</span>
+                <h1 class="banner-heading">Un espacio seguro donde sanar, crecer y reencontrarte</h1>
+                <p class="banner-subtext">
+                  Aprende a gestionar la ansiedad, superar heridas emocionales y fortalecer tus vínculos afectivos con acompañamiento profesional empático y basado en evidencia científica.
+                </p>
+                <div class="hero-action-buttons">
+                  <button class="nav-link-btn highlight" data-view-target="view-agenda">📅 Agenda tu Cita</button>
+                  <button class="nav-link-btn" data-view-target="view-servicios">Ver Servicios y Productos</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <hr class="section-divider">
+
+        <!-- SECCIÓN: ¿POR QUÉ LLEVAR TERAPIA CONMIGO? (3 columnas wireframe) -->
+        <div class="why-me-section">
+          <h2 class="section-title">¿Por qué llevar terapia conmigo?</h2>
+          <div class="benefits-grid">
+            <!-- Columna 1 -->
+            <div class="benefit-card">
+              <div class="benefit-icon">🧠</div>
+              <h3>Enfoque Basado en Evidencia</h3>
+              <p>
+                Trabajo con Terapia Cognitivo-Conductual (TCC) y Terapia de Aceptación y Compromiso (ACT), metodologías con comprobado respaldo científico que te brindan herramientas aplicables desde la primera sesión.
+              </p>
+            </div>
+
+            <!-- Columna 2 -->
+            <div class="benefit-card">
+              <div class="benefit-icon">🌿</div>
+              <h3>Espacio Cálido y sin Juicios</h3>
+              <p>
+                Un entorno seguro, respetuoso y estrictamente confidencial. Aquí todas tus emociones tienen un lugar legítimo para ser escuchadas, procesadas y comprendidas a profundidad.
+              </p>
+            </div>
+
+            <!-- Columna 3 -->
+            <div class="benefit-card">
+              <div class="benefit-icon">🤝</div>
+              <h3>Acompañamiento a tu Ritmo</h3>
+              <p>
+                No existen fórmulas mágicas ni recetas idénticas. Diseñamos juntos un plan terapéutico a tu medida, adaptado a tu estilo de vida, tus valores personales y tus metas más significativas.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <hr class="section-divider">
+
+        <!-- SECCIÓN: TESTIMONIOS (Carrusel / Stack del wireframe) -->
+        <div class="testimonials-section">
+          <h2 class="section-title">Testimonios</h2>
+          <div class="testimonials-stack-container">
+            <button class="carousel-nav-btn" id="testimonial-prev-btn" aria-label="Anterior testimonio">‹</button>
+            
+            <div class="testimonial-stack">
+              <div class="testimonial-card-item" id="current-testimonial-card">
+                <div class="testimonial-stars">★★★★★</div>
+                <p class="testimonial-quote">
+                  “Llegué a consulta sintiendo que no podía más con el estrés laboral y los ataques de pánico. Allison me brindó herramientas prácticas desde la primera sesión. Hoy siento que recuperé el control y la calma en mi vida.”
+                </p>
+                <div class="testimonial-author">
+                  <div class="author-avatar">C</div>
+                  <div class="author-info">
+                    <h4>Camila V.</h4>
+                    <span>Terapia Individual - Presencial</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <button class="carousel-nav-btn" id="testimonial-next-btn" aria-label="Siguiente testimonio">›</button>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         VISTA 2: PRODUCTOS Y SERVICIOS (Wireframe 2)
+         ==================================================================== -->
+    <section class="page-view" id="view-servicios">
+      <div class="container">
+        
+        <!-- SERVICIOS EN FORMATO ZIG-ZAG (Fiel al wireframe 2) -->
+        <h2 class="section-title">Servicios</h2>
+        <p class="section-subtitle">
+          Procesos terapéuticos diseñados para acompañarte en cada etapa de tu vida personal, afectiva y académica.
+        </p>
+
+        <div class="services-zigzag-list">
+          <!-- 1. Terapia Individual (Imagen Izquierda, Texto Derecha) -->
+          <div class="service-zigzag-row">
+            <div class="wireframe-box service-image-box">
+              <img src="https://images.unsplash.com/photo-1527689368864-3a821dbccc34?auto=format&fit=crop&w=800&q=80" alt="Terapia Individual" class="wireframe-box-image">
+            </div>
+            <div class="service-text-content">
+              <span class="service-badge">Adultos & Jóvenes</span>
+              <h3 class="service-title">Terapia Individual</h3>
+              <p class="service-description">
+                Un espacio personal para procesar emociones difíciles, sanar el pasado, superar episodios de ansiedad o depresión, gestionar el duelo y reconectar con tu autovaloración.
+              </p>
+              <ul class="service-features-list">
+                <li>Sesiones confidenciales de 50 minutos.</li>
+                <li>Modalidad Presencial (Miraflores) u Online vía Zoom / Meet.</li>
+                <li>Pautas y ejercicios prácticos entre sesiones.</li>
+              </ul>
+              <button class="service-cta-btn" data-view-target="view-agenda">Agendar Terapia Individual</button>
+            </div>
+          </div>
+
+          <!-- 2. Terapia de Parejas (Texto Izquierda, Imagen Derecha) -->
+          <div class="service-zigzag-row reverse">
+            <div class="service-text-content">
+              <span class="service-badge">Vínculos & Comunicación</span>
+              <h3 class="service-title">Terapia de Parejas</h3>
+              <p class="service-description">
+                Intervención enfocada en mejorar los canales de comunicación, resolver patrones de conflicto destructivos, restaurar la confianza y reencontrar la intimidad afectiva en la relación.
+              </p>
+              <ul class="service-features-list">
+                <li>Sesiones dinámicas de 60 a 70 minutos.</li>
+                <li>Mediación neutral y respetuosa para ambos integrantes.</li>
+                <li>Estrategias de resolución asertiva de problemas.</li>
+              </ul>
+              <button class="service-cta-btn" data-view-target="view-agenda">Agendar Terapia de Parejas</button>
+            </div>
+            <div class="wireframe-box service-image-box">
+              <img src="https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?auto=format&fit=crop&w=800&q=80" alt="Terapia de Parejas" class="wireframe-box-image">
+            </div>
+          </div>
+
+          <!-- 3. Evaluación (Imagen Izquierda, Texto Derecha) -->
+          <div class="service-zigzag-row">
+            <div class="wireframe-box service-image-box">
+              <img src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=800&q=80" alt="Evaluación Psicológica" class="wireframe-box-image">
+            </div>
+            <div class="service-text-content">
+              <span class="service-badge">Diagnóstico & Orientación</span>
+              <h3 class="service-title">Evaluación Psicológica</h3>
+              <p class="service-description">
+                Proceso diagnóstico riguroso mediante entrevistas clínicas e instrumentos psicométricos estandarizados para evaluar personalidad, sintomatología emocional, estrés o perfiles vocacionales.
+              </p>
+              <ul class="service-features-list">
+                <li>Batería de pruebas psicológicas validadas.</li>
+                <li>Sesión de devolución con explicación comprensible.</li>
+                <li>Entrega de informe formal y recomendaciones.</li>
+              </ul>
+              <button class="service-cta-btn" data-view-target="view-agenda">Solicitar Evaluación</button>
+            </div>
+          </div>
+
+          <!-- 4. Asesoría Académica (Texto Izquierda, Imagen Derecha) -->
+          <div class="service-zigzag-row reverse">
+            <div class="service-text-content">
+              <span class="service-badge">Estudiantes & Universitarios</span>
+              <h3 class="service-title">Asesoría Académica</h3>
+              <p class="service-description">
+                Orientación especializada para optimizar la organización del tiempo, vencer la procrastinación, reducir la ansiedad ante exámenes y desarrollar técnicas de estudio efectivas y sostenibles.
+              </p>
+              <ul class="service-features-list">
+                <li>Técnicas de gestión del tiempo y motivación.</li>
+                <li>Estrategias de regulación de estrés académico.</li>
+                <li>Orientación vocacional y proyectos de vida.</li>
+              </ul>
+              <button class="service-cta-btn" data-view-target="view-agenda">Agendar Asesoría Académica</button>
+            </div>
+            <div class="wireframe-box service-image-box">
+              <img src="https://images.unsplash.com/photo-1434030216411-0b793f4b4173?auto=format&fit=crop&w=800&q=80" alt="Asesoría Académica" class="wireframe-box-image">
+            </div>
+          </div>
+        </div>
+
+        <hr class="section-divider">
+
+        <!-- PRODUCTOS: CAJA DE LA CALMA (Slider izquierda, datos y precio S/. 99.99 derecha) -->
+        <h2 class="section-title">Productos</h2>
+        
+        <div class="product-showcase-box">
+          <!-- Galería / Slider con flechas y 4 dots -->
+          <div class="product-gallery">
+            <div class="product-slider-wrapper">
+              <button class="slider-arrow-btn prev" id="product-slide-prev" aria-label="Anterior">‹</button>
+              <img src="https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?auto=format&fit=crop&w=900&q=80" alt="Caja de la Calma" class="product-slide-img" id="product-main-slide-img">
+              <button class="slider-arrow-btn next" id="product-slide-next" aria-label="Siguiente">›</button>
+            </div>
+            <div class="slider-dots" id="product-slider-dots">
+              <span class="slider-dot active"></span>
+              <span class="slider-dot"></span>
+              <span class="slider-dot"></span>
+              <span class="slider-dot"></span>
+            </div>
+          </div>
+
+          <!-- Detalles del Producto -->
+          <div class="product-info-details">
+            <span class="service-badge">Edición Exclusiva</span>
+            <h3 class="product-title">CAJA DE LA CALMA</h3>
+            <p class="product-desc">
+              Un kit sensorial y psicoterapéutico diseñado personalmente por la Psico. Allison Rios para asistirte en episodios de estrés elevado, sobrecarga emocional o crisis de ansiedad.
+            </p>
+            <div class="product-kit-items">
+              <div>🌿 <strong>Roll-on de aromaterapia:</strong> Esencias naturales de lavanda y bergamota.</div>
+              <div>📖 <strong>Guía de Grounding & Respiración:</strong> Técnica 5-4-3-2-1 y diafragmática.</div>
+              <div>🪨 <strong>Objeto táctil sensorial:</strong> Diseñado para estimulación propioceptiva.</div>
+              <div>📝 <strong>Diario de gratitud & Baraja:</strong> 30 cartas con afirmaciones terapéuticas.</div>
+            </div>
+            <div class="product-purchase-row">
+              <div class="product-price">S/. 99,99</div>
+              <button class="add-cart-btn" id="btn-add-caja-calma">
+                añadir al carrito 🛒
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <hr class="section-divider">
+
+        <!-- PRÓXIMOS EVENTOS: TALLERES -->
+        <h2 class="section-title">Próximos eventos</h2>
+        <p class="section-subtitle">Talleres grupales, espacios vivenciales y círculos de reflexión.</p>
+
+        <div class="events-grid">
+          <div class="event-card">
+            <div>
+              <span class="event-date-badge">Sáb, 24 de Octubre &middot; Presencial</span>
+              <h4 style="margin-top: 0.75rem;">Taller de Manejo del Estrés y Ansiedad</h4>
+              <p style="margin-top: 0.5rem;">Aprende dinámicas somáticas y cognitivas para reducir la sobrecarga mental en el día a día.</p>
+            </div>
+            <button class="event-register-btn" data-view-target="view-agenda">Inscribirme al Taller</button>
+          </div>
+
+          <div class="event-card">
+            <div>
+              <span class="event-date-badge">Mié, 4 de Noviembre &middot; Vía Zoom</span>
+              <h4 style="margin-top: 0.75rem;">Comunicación Asertiva y Apego Seguro</h4>
+              <p style="margin-top: 0.5rem;">Taller intensivo para parejas e individuos que desean transformar su forma de expresar necesidades.</p>
+            </div>
+            <button class="event-register-btn" data-view-target="view-agenda">Inscribirme al Taller</button>
+          </div>
+
+          <div class="event-card">
+            <div>
+              <span class="event-date-badge">Sáb, 14 de Noviembre &middot; Presencial</span>
+              <h4 style="margin-top: 0.75rem;">Amor Propio y Venciendo el Impostor</h4>
+              <p style="margin-top: 0.5rem;">Espacio terapéutico vivencial para desmantelar la autoexigencia destructiva y la autocrítica.</p>
+            </div>
+            <button class="event-register-btn" data-view-target="view-agenda">Inscribirme al Taller</button>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         VISTA 3: CONOCE A TU PSICÓLOGA (Wireframe 1)
+         ==================================================================== -->
+    <section class="page-view" id="view-conoce">
+      <div class="container">
+        
+        <h2 class="section-title">Conoce a tu Psicóloga</h2>
+
+        <!-- GRID PRINCIPAL DE PRESENTACIÓN (Foto izq, Bio y firma der) -->
+        <div class="about-hero-grid">
+          <!-- Foto retrato grande -->
+          <div class="wireframe-box about-photo-card">
+            <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=900&q=80" alt="Psicóloga Allison Rios" class="wireframe-box-image">
+          </div>
+
+          <!-- Contenido: Frase, Biografía, Firma y CTA -->
+          <div class="about-content-right">
+            <blockquote class="psych-quote">
+              “El autoconocimiento es el primer paso hacia la libertad emocional y el bienestar auténtico.”
+            </blockquote>
+
+            <div class="about-paragraphs">
+              <p>
+                Soy Allison Rios, Licenciada en Psicología Clínica y colegiada en el Colegio de Psicólogos del Perú (C.Ps.P. 38492). Con más de 7 años de experiencia acompañando a adolescentes y adultos, mi vocación nace de la convicción de que nadie tiene que transitar sus batallas emocionales en soledad.
+              </p>
+              <p>
+                Mi formación se fundamenta en la Terapia Cognitivo-Conductual (TCC) y Terapias Contextuales (ACT), combinando la rigurosidad científica con un trato cálido, humano y libre de juicios. En consulta aprenderás no solo a comprender de dónde vienen tus pensamientos y emociones, sino a adquirir herramientas prácticas para vivir con mayor serenidad y coherencia con tus valores.
+              </p>
+            </div>
+
+            <div class="about-author-signature">
+              Allison Rios
+            </div>
+
+            <button class="about-cta-btn highlight" data-view-target="view-agenda">
+              Agenda tu Cita
+            </button>
+          </div>
+        </div>
+
+        <hr class="section-divider">
+
+        <!-- PREGUNTAS FRECUENTES (FAQ) -->
+        <h2 class="section-title">Preguntas Frecuentes</h2>
+
+        <div class="faq-grid">
+          <!-- Columna Izquierda: Texto de intro + Botón Danger (Líneas de crisis) -->
+          <div class="faq-intro-col">
+            <p class="faq-intro-text">
+              Iniciar un proceso psicoterapéutico puede generar dudas lógicas. Aquí resuelvo las consultas más habituales de mis pacientes sobre las sesiones, duración, confidencialidad y modalidades.
+            </p>
+            
+            <!-- Botón Danger del Wireframe: Emergencias y Asistencia 24/7 -->
+            <button class="danger-crisis-btn" id="faq-danger-crisis-btn">
+              ⚠️ Danger / Crisis 24/7
+            </button>
+            <small style="color: #64748b; font-size: 0.8rem;">
+              Si tú o alguien cercano experimenta una crisis de salud mental inmediata, haz clic aquí para ver líneas de apoyo gratuitas.
+            </small>
+          </div>
+
+          <!-- Columna Derecha: Accordion de Preguntas (Item 2 expandido por defecto) -->
+          <div class="faq-accordion-list">
+            <!-- Item 1 -->
+            <div class="faq-item">
+              <div class="faq-header">
+                <span>1. ¿Cómo sé si necesito acudir al psicólogo?</span>
+                <span class="faq-checkbox-indicator"></span>
+              </div>
+              <div class="faq-body">
+                No necesitas esperar a tocar fondo para ir a terapia. Si experimentas ansiedad constante, tristeza prolongada, dificultades para conciliar el sueño, bloqueos en tus relaciones o simplemente buscas conocerte mejor, la psicoterapia es el espacio idóneo para ti.
+              </div>
+            </div>
+
+            <!-- Item 2 (Expandido por defecto como en el wireframe Item Two) -->
+            <div class="faq-item active">
+              <div class="faq-header">
+                <span>2. ¿Cuánto dura cada sesión y con qué frecuencia se realizan?</span>
+                <span class="faq-checkbox-indicator">✓</span>
+              </div>
+              <div class="faq-body">
+                Las sesiones individuales tienen una duración estándar de 50 minutos (60 a 70 minutos para parejas). En la etapa inicial se recomienda una frecuencia semanal para consolidar el vínculo y los objetivos terapéuticos. Conforme se logran avances, las sesiones se espacian de manera quincenal o mensual hasta el alta definitiva.
+              </div>
+            </div>
+
+            <!-- Item 3 -->
+            <div class="faq-item">
+              <div class="faq-header">
+                <span>3. ¿Qué diferencias existen entre la sesión presencial y la online?</span>
+                <span class="faq-checkbox-indicator"></span>
+              </div>
+              <div class="faq-body">
+                Ambas modalidades poseen la misma eficacia clínica respaldada por estudios internacionales. La modalidad presencial se realiza en nuestro consultorio en Miraflores (Lima), mientras que la modalidad online se efectúa por Zoom o Google Meet con total comodidad desde donde estés.
+              </div>
+            </div>
+
+            <!-- Item 4 -->
+            <div class="faq-item">
+              <div class="faq-header">
+                <span>4. ¿Cómo garantizan el secreto profesional y la confidencialidad?</span>
+                <span class="faq-checkbox-indicator"></span>
+              </div>
+              <div class="faq-body">
+                La confidencialidad es un principio ético inquebrantable regido por el Código de Ética del Colegio de Psicólogos del Perú. Toda la información vertida en sesión es estrictamente privada y confidencial.
+              </div>
+            </div>
+
+            <!-- Item 5 -->
+            <div class="faq-item">
+              <div class="faq-header">
+                <span>5. ¿Cuáles son los métodos de pago disponibles?</span>
+                <span class="faq-checkbox-indicator"></span>
+              </div>
+              <div class="faq-body">
+                Aceptamos transferencias bancarias directas (BCP, Interbank, BBVA), aplicaciones móviles peruanas (Yape, Plin) y pagos internacionales mediante PayPal o tarjeta de crédito.
+              </div>
+            </div>
+
+            <!-- Item 6 -->
+            <div class="faq-item">
+              <div class="faq-header">
+                <span>6. ¿Qué ocurre si necesito reprogramar o cancelar una cita?</span>
+                <span class="faq-checkbox-indicator"></span>
+              </div>
+              <div class="faq-body">
+                Puedes reprogramar tu sesión sin penalidad avisando con un mínimo de 24 horas de anticipación. Esto permite poner el turno a disposición de pacientes que lo requieran con urgencia.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <hr class="section-divider">
+
+        <!-- VISITA MIS REDES SOCIALES (Video izquierda, Doodle y Redes derecha) -->
+        <div class="socials-wrapper">
+          <h2 class="section-title">Visita mis Redes Sociales</h2>
+          <div class="socials-section-grid">
+            <!-- Video Player interactivo -->
+            <div class="video-player-mockup">
+              <div class="video-screen" style="background-image: url('https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=800&q=80');">
+                <div class="video-overlay-gradient"></div>
+                <button class="video-play-center-btn" id="video-center-play-btn" aria-label="Reproducir video">▶</button>
+              </div>
+              <div class="video-controls-bar">
+                <button class="video-ctrl-btn" id="video-ctrl-play">▶</button>
+                <div class="video-progress-container">
+                  <div class="video-progress-fill" id="video-progress-fill"></div>
+                </div>
+                <span class="video-time-text" id="video-time-display">0:14 / 1:32</span>
+                <button class="video-ctrl-btn" id="video-ctrl-mute">🔊</button>
+              </div>
+            </div>
+
+            <!-- Doodle y Redes Sociales (Instagram, Facebook, Telegram) -->
+            <div class="socials-content-right">
+              <div class="socials-doodle-text">
+                ¡Acompáñame en mi comunidad digital! ✨
+              </div>
+              <p style="color: #64748b; font-size: 0.95rem;">
+                Comparto reflexiones semanales, ejercicios de respiración, guías descargables y respuestas a tus preguntas en vivo.
+              </p>
+              <div class="socials-icons-row">
+                <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" class="social-icon-btn instagram" title="Instagram: @psico.allisonrios">
+                  <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+                </a>
+                <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" class="social-icon-btn facebook" title="Facebook: Psico. Allison Rios">
+                  <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>
+                </a>
+                <a href="https://telegram.org" target="_blank" rel="noopener noreferrer" class="social-icon-btn telegram" title="Telegram: Canal de Bienestar">
+                  <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         VISTA 4: AGENDA TU CITA (Wireframe 3)
+         ==================================================================== -->
+    <section class="page-view" id="view-agenda">
+      <div class="container">
+        
+        <h2 class="section-title">Agenda tu Cita</h2>
+
+        <div class="booking-grid">
+          
+          <!-- COLUMNA IZQUIERDA: Foto consultorio + Sede Presencial y Mapa -->
+          <div class="booking-left-col">
+            <!-- Foto del consultorio -->
+            <div class="wireframe-box booking-featured-image">
+              <img src="https://images.unsplash.com/photo-1527689368864-3a821dbccc34?auto=format&fit=crop&w=800&q=80" alt="Espacio Interior Consultorio" class="wireframe-box-image">
+            </div>
+
+            <!-- Tarjeta de Sede Presencial (Texto idéntico al wireframe 3) -->
+            <div class="location-card">
+              <h3 class="location-title">Nuestra sede presencial:</h3>
+              
+              <!-- Mapa ilustrado con pin -->
+              <div class="location-map-wrap">
+                <img src="https://images.unsplash.com/photo-1524661135-423995f22d0b?auto=format&fit=crop&w=800&q=80" alt="Mapa de ubicación en Miraflores" class="location-map-img">
+                <div class="map-badge-pin">📍 Miraflores, Lima</div>
+              </div>
+
+              <!-- Texto textual del wireframe -->
+              <div class="location-text">
+                <p>
+                  📍 <strong>¿Dónde estamos ubicados?</strong> ¡Es superfácil llegar! Te esperamos en nuestro local <strong>Espacio Interior 🏠✨</strong>.
+                </p>
+                <p style="margin-top: 0.5rem;">
+                  🗺️ <strong>Dirección:</strong> Juan de la Fuente 625, Miraflores 15047.
+                </p>
+                <p style="margin-top: 0.5rem;">
+                  Da clic en los enlaces a continuación para abrir la ruta directa en tu GPS favorito y visitarnos hoy mismo. ¡Te esperamos!
+                </p>
+              </div>
+
+              <div class="location-actions">
+                <a href="https://maps.google.com/?q=Juan+de+la+Fuente+625+Miraflores+Lima" target="_blank" rel="noopener noreferrer" class="gps-btn">
+                  🗺️ Google Maps
+                </a>
+                <a href="https://waze.com/ul?q=Juan+de+la+Fuente+625+Miraflores+Lima" target="_blank" rel="noopener noreferrer" class="gps-btn">
+                  🚗 Abrir en Waze
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <!-- COLUMNA DERECHA: Formulario + Calendario Interactivo + WhatsApp -->
+          <div class="booking-form-col">
+            <form id="appointment-booking-form" class="booking-form-fields">
+              
+              <div class="form-row-2">
+                <div class="form-group">
+                  <label class="form-label" for="book-nombres">Nombres:</label>
+                  <input type="text" id="book-nombres" class="form-input" placeholder="Ej. Camila" required>
+                </div>
+                <div class="form-group">
+                  <label class="form-label" for="book-apellidos">Apellidos:</label>
+                  <input type="text" id="book-apellidos" class="form-input" placeholder="Ej. Vargas Silva" required>
+                </div>
+              </div>
+
+              <div class="form-row-2">
+                <div class="form-group">
+                  <label class="form-label" for="book-telefono">Teléfono:</label>
+                  <input type="tel" id="book-telefono" class="form-input" placeholder="+51 987 654 321" required>
+                </div>
+                <div class="form-group">
+                  <label class="form-label" for="book-correo">Correo Electrónico:</label>
+                  <input type="email" id="book-correo" class="form-input" placeholder="correo@ejemplo.com" required>
+                </div>
+              </div>
+
+              <!-- Selectores de servicio y modalidad (combo box) -->
+              <div class="form-row-2">
+                <div class="form-group">
+                  <label class="form-label" for="book-servicio">combo box label (Servicio):</label>
+                  <select id="book-servicio" class="form-select">
+                    <option value="Terapia Individual">Terapia Individual (S/. 120)</option>
+                    <option value="Terapia de Parejas">Terapia de Parejas (S/. 180)</option>
+                    <option value="Evaluación Psicológica">Evaluación Psicológica (S/. 250)</option>
+                    <option value="Asesoría Académica">Asesoría Académica (S/. 100)</option>
+                  </select>
+                </div>
+
+                <div class="form-group">
+                  <label class="form-label" for="book-modalidad">Modalidad de Atención:</label>
+                  <select id="book-modalidad" class="form-select">
+                    <option value="Presencial (Miraflores, Lima)">Presencial (Sede Miraflores)</option>
+                    <option value="Virtual (Online / Zoom)">Virtual (Zoom / Meet)</option>
+                  </select>
+                </div>
+              </div>
+
+              <!-- Input Fecha Seleccionada (date chooser label) -->
+              <div class="form-group">
+                <label class="form-label" for="booking-date-input">date chooser label (Fecha seleccionada):</label>
+                <div class="input-with-icon">
+                  <input type="text" id="booking-date-input" class="form-input" value="10 / 10 / 2026 (10:00 AM)" readonly>
+                  <span class="input-icon-btn">📅</span>
+                </div>
+              </div>
+
+              <!-- Botón Directo WhatsApp (Wireframe 3) -->
+              <button type="button" class="whatsapp-booking-btn" id="whatsapp-quick-cta">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.77-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.299.045-.677.063-1.092-.069-.252-.08-.575-.187-.988-.365-1.739-.751-2.874-2.502-2.961-2.617-.087-.116-.708-.94-.708-1.793s.448-1.273.607-1.446c.159-.173.346-.217.462-.217l.332.006c.106.005.249-.04.39.298.144.347.491 1.2.534 1.287.043.087.072.188.014.304-.058.116-.087.188-.173.289l-.26.304c-.087.086-.177.18-.076.353.101.173.45 1.743 1.972 2.096.197.045.318.042.433-.092.116-.134.492-.572.622-.767.13-.195.26-.163.433-.099.173.064 1.097.517 1.285.611.188.094.313.14.359.219.046.079.046.457-.098.862z"/></svg>
+                WhatsApp (Agendar por WhatsApp)
+              </button>
+
+              <!-- COMPONENTE DE CALENDARIO INTERACTIVO (Wireframe 3: Octubre 2026, día 10 activo, Cancel / OK) -->
+              <div class="calendar-widget-card">
+                <div class="calendar-top-header">
+                  <div class="calendar-year-label" id="cal-year-label">2026</div>
+                  <div class="calendar-selected-title" id="cal-selected-title">Sat, Oct 10</div>
+                </div>
+
+                <div class="calendar-nav-row">
+                  <button type="button" class="cal-month-nav-btn" id="cal-prev-month" aria-label="Mes anterior">‹</button>
+                  <div class="cal-month-name" id="cal-month-name">OCTUBRE 2026</div>
+                  <button type="button" class="cal-month-nav-btn" id="cal-next-month" aria-label="Mes siguiente">›</button>
+                </div>
+
+                <!-- Grid de días (S M T W T F S) -->
+                <div class="calendar-days-grid" id="cal-days-grid">
+                  <!-- Días inyectados dinámicamente por JavaScript -->
+                </div>
+
+                <!-- Turnos de Horario Disponibles -->
+                <div class="calendar-time-slots">
+                  <div class="time-slots-label">Horarios disponibles:</div>
+                  <div class="time-slots-pills">
+                    <span class="time-pill selected" data-time="10:00 AM">10:00 AM</span>
+                    <span class="time-pill" data-time="11:30 AM">11:30 AM</span>
+                    <span class="time-pill" data-time="03:00 PM">03:00 PM</span>
+                    <span class="time-pill" data-time="04:30 PM">04:30 PM</span>
+                    <span class="time-pill" data-time="06:00 PM">06:00 PM</span>
+                  </div>
+                </div>
+
+                <div class="calendar-footer-actions">
+                  <button type="button" class="cal-action-btn cancel" id="cal-btn-cancel">CANCEL</button>
+                  <button type="button" class="cal-action-btn" id="cal-btn-ok">OK</button>
+                </div>
+              </div>
+
+              <!-- Botón Final de Envío / Confirmación -->
+              <button type="submit" class="confirm-booking-btn">
+                Confirmar y Reservar Cita
+              </button>
+
+            </form>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+  </main>
+
+  <!-- ====================================================================
+       FOOTER (Encuéntrame en mis redes) - Presente en Wireframe 1, 3 y 4
+       ==================================================================== -->
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div class="footer-socials-title">Encuéntrame en mis redes:</div>
+      <div class="footer-social-links">
+        <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" class="footer-icon-link" title="Instagram">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+        </a>
+        <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" class="footer-icon-link" title="Facebook">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>
+        </a>
+        <a href="https://telegram.org" target="_blank" rel="noopener noreferrer" class="footer-icon-link" title="Telegram">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+        </a>
+      </div>
+
+      <div class="footer-copy">
+        <div>&copy; 2026 Psico. Allison Rios &middot; Colegiatura C.Ps.P. 38492 &middot; Todos los derechos reservados.</div>
+        <div>Espacio Interior &middot; Juan de la Fuente 625, Miraflores, Lima - Perú</div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ====================================================================
+       CARRITO DESPLEGABLE LATERAL (Slide-over Cart Drawer)
+       ==================================================================== -->
+  <div class="cart-drawer-overlay" id="cart-drawer-overlay"></div>
+  <aside class="cart-drawer" id="cart-drawer">
+    <div class="cart-header">
+      <div class="cart-title">Tu Carrito de Bienestar</div>
+      <button class="cart-close-btn" id="cart-close-btn">✕</button>
+    </div>
+    <div class="cart-items-container" id="cart-items-list">
+      <!-- Elementos del carrito inyectados dinámicamente -->
+    </div>
+    <div class="cart-footer">
+      <div class="cart-total-row">
+        <span>Total:</span>
+        <span id="cart-total-amount">S/. 0.00</span>
+      </div>
+      <button class="checkout-btn" id="cart-checkout-whatsapp">
+        <span>Completar Pedido por WhatsApp</span> 💬
+      </button>
+    </div>
+  </aside>
+
+  <!-- ====================================================================
+       MODAL DE AYUDA EN CRISIS / EMERGENCIAS (Danger Button del Wireframe)
+       ==================================================================== -->
+  <div class="crisis-modal-overlay" id="crisis-modal-overlay">
+    <div class="crisis-modal-card">
+      <div class="crisis-modal-header">
+        <span style="font-size: 2rem;">🚨</span>
+        <h3>Líneas de Ayuda en Crisis 24/7</h3>
+      </div>
+      <p style="font-size: 0.95rem; color: #475569; line-height: 1.6;">
+        Si estás atravesando una emergencia emocional, pensamientos de autolesión o una crisis que desborda tus recursos actuales, por favor comunícate de inmediato con las líneas oficiales de asistencia psicológica gratuita:
+      </p>
+      
+      <div class="crisis-lines-list">
+        <div class="crisis-line-item">
+          <div>
+            <strong>Línea 113 (Opción 5) - MINSA</strong>
+            <div style="font-size: 0.8rem; color: #64748b;">Orientación psicológica gratuita a nivel nacional en Perú.</div>
+          </div>
+          <a href="tel:113" style="font-weight: 800; color: #d9383a; font-size: 1.1rem;">Llamar 113</a>
+        </div>
+
+        <div class="crisis-line-item">
+          <div>
+            <strong>SAMU - Emergencias Médicas 106</strong>
+            <div style="font-size: 0.8rem; color: #64748b;">Atención médica y de urgencias las 24 horas.</div>
+          </div>
+          <a href="tel:106" style="font-weight: 800; color: #d9383a; font-size: 1.1rem;">Llamar 106</a>
+        </div>
+
+        <div class="crisis-line-item">
+          <div>
+            <strong>Línea 100 - MIMP</strong>
+            <div style="font-size: 0.8rem; color: #64748b;">Apoyo psicológico y legal ante situaciones de violencia familiar.</div>
+          </div>
+          <a href="tel:100" style="font-weight: 800; color: #d9383a; font-size: 1.1rem;">Llamar 100</a>
+        </div>
+      </div>
+
+      <button class="crisis-close-btn" id="close-crisis-modal-btn">Cerrar y volver al sitio</button>
+    </div>
+  </div>
+
+  <!-- ====================================================================
+       MODAL DE CONFIRMACIÓN DE CITA RESERVADA
+       ==================================================================== -->
+  <div class="success-modal-overlay" id="booking-success-modal">
+    <div class="success-modal-card">
+      <div class="success-check-icon">✓</div>
+      <h3 style="font-size: 1.5rem; margin-bottom: 0.5rem; font-weight: 800;">¡Solicitud de Cita Recibida!</h3>
+      <p style="color: #64748b; font-size: 0.95rem; margin-bottom: 1.25rem;">
+        Hemos registrado tus datos. Te contactaremos en breve para confirmar el horario final.
+      </p>
+      <div id="success-summary-details" style="text-align: left; background: #f8fafc; border: 1.5px solid #cbd5e1; border-radius: 8px; padding: 1rem; margin-bottom: 1.5rem; font-size: 0.9rem; line-height: 1.7;">
+      </div>
+      <div style="display: flex; gap: 0.75rem;">
+        <button class="whatsapp-booking-btn" id="modal-whatsapp-confirm" style="font-size: 0.95rem; padding: 0.7rem;">
+          Confirmar por WhatsApp ahora
+        </button>
+        <button class="service-cta-btn" id="close-success-modal-btn" style="padding: 0.7rem 1rem;">
+          Aceptar
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="app.js"></script>
+</body>
+</html>
