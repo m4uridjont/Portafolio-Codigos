@@ -1,0 +1,686 @@
+/**
+ * Psicóloga Allison Rios - Lógica Interactiva
+ * Manejo de Vistas, Calendario de Citas, Carrito de Compras, FAQ, Video y WhatsApp
+ */
+
+document.addEventListener('DOMContentLoaded', () => {
+  initNavigation();
+  initCalendar();
+  initShoppingCart();
+  initProductSlider();
+  initFaqAccordion();
+  initVideoPlayer();
+  initTestimonialsSlider();
+  initBookingForm();
+  initCrisisModal();
+});
+
+/* ==========================================================================
+   1. NAVEGACIÓN Y CAMBIO DE VISTAS (Home, Servicios, Conoce, Agenda)
+   ========================================================================== */
+function initNavigation() {
+  const navButtons = document.querySelectorAll('[data-view-target]');
+  const pageViews = document.querySelectorAll('.page-view');
+  const browserAddressText = document.getElementById('browser-address-text');
+  const mobileDrawer = document.getElementById('mobile-nav-drawer');
+  const mobileToggle = document.getElementById('mobile-nav-toggle');
+
+  function switchView(targetId) {
+    if (!targetId) targetId = 'view-home';
+
+    // Ocultar todas las vistas
+    pageViews.forEach(view => {
+      view.classList.remove('active-view');
+    });
+
+    // Mostrar la vista seleccionada
+    const targetView = document.getElementById(targetId);
+    if (targetView) {
+      targetView.classList.add('active-view');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // Actualizar botones de navegación activos
+    navButtons.forEach(btn => {
+      if (btn.getAttribute('data-view-target') === targetId) {
+        btn.classList.add('active');
+      } else {
+        btn.classList.remove('active');
+      }
+    });
+
+    // Actualizar barra de direcciones simulada
+    if (browserAddressText) {
+      const slugMap = {
+        'view-home': 'home',
+        'view-servicios': 'productos-y-servicios',
+        'view-conoce': 'conoce-a-tu-psicologa',
+        'view-agenda': 'agenda-tu-cita'
+      };
+      const slug = slugMap[targetId] || 'home';
+      browserAddressText.textContent = `https://psicoallisonrios.com/${slug}`;
+      window.location.hash = slug;
+    }
+
+    // Cerrar menú móvil si está abierto
+    if (mobileDrawer) {
+      mobileDrawer.style.display = 'none';
+    }
+  }
+
+  // Event listeners para botones de navegación
+  navButtons.forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.preventDefault();
+      const target = btn.getAttribute('data-view-target');
+      switchView(target);
+    });
+  });
+
+  // Toggle menú móvil
+  if (mobileToggle && mobileDrawer) {
+    mobileToggle.addEventListener('click', () => {
+      const isVisible = mobileDrawer.style.display === 'flex';
+      mobileDrawer.style.display = isVisible ? 'none' : 'flex';
+    });
+  }
+
+  // Detectar hash en la URL al cargar
+  const hash = window.location.hash.replace('#', '');
+  const reverseMap = {
+    'home': 'view-home',
+    'productos-y-servicios': 'view-servicios',
+    'servicios': 'view-servicios',
+    'conoce-a-tu-psicologa': 'view-conoce',
+    'conoce': 'view-conoce',
+    'agenda-tu-cita': 'view-agenda',
+    'agenda': 'view-agenda'
+  };
+
+  if (hash && reverseMap[hash]) {
+    switchView(reverseMap[hash]);
+  } else {
+    switchView('view-home');
+  }
+}
+
+/* ==========================================================================
+   2. CALENDARIO INTERACTIVO (Exacto al Wireframe 3)
+   ========================================================================== */
+let selectedDateObj = new Date(2026, 9, 10); // Sábado 10 de Octubre 2026 por defecto (como en wireframe)
+let selectedTimeSlot = '10:00 AM';
+
+function initCalendar() {
+  const currentMonthYearLabel = document.getElementById('cal-month-name');
+  const selectedHeaderTitle = document.getElementById('cal-selected-title');
+  const daysGrid = document.getElementById('cal-days-grid');
+  const prevMonthBtn = document.getElementById('cal-prev-month');
+  const nextMonthBtn = document.getElementById('cal-next-month');
+  const dateInputDisplay = document.getElementById('booking-date-input');
+  const timePills = document.querySelectorAll('.time-pill');
+  const btnOk = document.getElementById('cal-btn-ok');
+  const btnCancel = document.getElementById('cal-btn-cancel');
+
+  let currentCalDate = new Date(selectedDateObj.getTime());
+
+  const monthNames = [
+    'ENERO', 'FEBRERO', 'MARZO', 'ABRIL', 'MAYO', 'JUNIO',
+    'JULIO', 'AGOSTO', 'SETIEMBRE', 'OCTUBRE', 'NOVIEMBRE', 'DICIEMBRE'
+  ];
+
+  const dayNamesShort = ['Dom', 'Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb'];
+
+  function renderCalendar() {
+    const year = currentCalDate.getFullYear();
+    const month = currentCalDate.getMonth();
+
+    if (currentMonthYearLabel) {
+      currentMonthYearLabel.textContent = `${monthNames[month]} ${year}`;
+    }
+
+    // Cabecera superior: ej. "Sat, Oct 10"
+    if (selectedHeaderTitle) {
+      const dayName = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'][selectedDateObj.getDay()];
+      const monthShort = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'][selectedDateObj.getMonth()];
+      selectedHeaderTitle.textContent = `${dayName}, ${monthShort} ${selectedDateObj.getDate()}`;
+    }
+
+    if (!daysGrid) return;
+    daysGrid.innerHTML = '';
+
+    // Días de la semana encabezado: S M T W T F S
+    const weekHeaders = ['S', 'M', 'T', 'W', 'T', 'F', 'S'];
+    weekHeaders.forEach(dayLetter => {
+      const headerCell = document.createElement('div');
+      headerCell.className = 'cal-header-day';
+      headerCell.textContent = dayLetter;
+      daysGrid.appendChild(headerCell);
+    });
+
+    // Primer día del mes y total de días
+    const firstDayIndex = new Date(year, month, 1).getDay();
+    const daysInMonth = new Date(year, month + 1, 0).getDate();
+
+    // Celdas vacías antes del primer día
+    for (let i = 0; i < firstDayIndex; i++) {
+      const emptyCell = document.createElement('div');
+      emptyCell.className = 'cal-day-cell disabled';
+      daysGrid.appendChild(emptyCell);
+    }
+
+    // Días del mes
+    for (let day = 1; day <= daysInMonth; day++) {
+      const dayCell = document.createElement('div');
+      dayCell.className = 'cal-day-cell';
+      dayCell.textContent = day;
+
+      const isCurrentSelected =
+        selectedDateObj.getFullYear() === year &&
+        selectedDateObj.getMonth() === month &&
+        selectedDateObj.getDate() === day;
+
+      if (isCurrentSelected) {
+        dayCell.classList.add('active-day');
+      }
+
+      dayCell.addEventListener('click', () => {
+        selectedDateObj = new Date(year, month, day);
+        renderCalendar();
+        updateDateInput();
+      });
+
+      daysGrid.appendChild(dayCell);
+    }
+  }
+
+  function updateDateInput() {
+    if (dateInputDisplay) {
+      const dd = String(selectedDateObj.getDate()).padStart(2, '0');
+      const mm = String(selectedDateObj.getMonth() + 1).padStart(2, '0');
+      const yyyy = selectedDateObj.getFullYear();
+      dateInputDisplay.value = `${dd} / ${mm} / ${yyyy} (${selectedTimeSlot})`;
+    }
+  }
+
+  // Time pills listeners
+  timePills.forEach(pill => {
+    pill.addEventListener('click', () => {
+      timePills.forEach(p => p.classList.remove('selected'));
+      pill.classList.add('selected');
+      selectedTimeSlot = pill.getAttribute('data-time') || pill.textContent;
+      updateDateInput();
+    });
+  });
+
+  if (prevMonthBtn) {
+    prevMonthBtn.addEventListener('click', () => {
+      currentCalDate.setMonth(currentCalDate.getMonth() - 1);
+      renderCalendar();
+    });
+  }
+
+  if (nextMonthBtn) {
+    nextMonthBtn.addEventListener('click', () => {
+      currentCalDate.setMonth(currentCalDate.getMonth() + 1);
+      renderCalendar();
+    });
+  }
+
+  if (btnOk) {
+    btnOk.addEventListener('click', () => {
+      updateDateInput();
+      showToast(`Fecha confirmada: ${dateInputDisplay.value}`);
+    });
+  }
+
+  if (btnCancel) {
+    btnCancel.addEventListener('click', () => {
+      selectedDateObj = new Date(2026, 9, 10);
+      currentCalDate = new Date(2026, 9, 10);
+      renderCalendar();
+      updateDateInput();
+      showToast('Selección de fecha reiniciada');
+    });
+  }
+
+  renderCalendar();
+  updateDateInput();
+}
+
+/* ==========================================================================
+   3. FORMULARIO DE AGENDAMIENTO & WHATSAPP
+   ========================================================================== */
+function initBookingForm() {
+  const form = document.getElementById('appointment-booking-form');
+  const whatsappQuickBtn = document.getElementById('whatsapp-quick-cta');
+  const successModal = document.getElementById('booking-success-modal');
+  const closeSuccessBtn = document.getElementById('close-success-modal-btn');
+
+  function getFormData() {
+    const nombres = document.getElementById('book-nombres')?.value.trim() || '';
+    const apellidos = document.getElementById('book-apellidos')?.value.trim() || '';
+    const telefono = document.getElementById('book-telefono')?.value.trim() || '';
+    const correo = document.getElementById('book-correo')?.value.trim() || '';
+    const servicio = document.getElementById('book-servicio')?.value || 'Terapia Individual';
+    const modalidad = document.getElementById('book-modalidad')?.value || 'Presencial (Miraflores, Lima)';
+    const fecha = document.getElementById('booking-date-input')?.value || '10/10/2026';
+
+    return { nombres, apellidos, telefono, correo, servicio, modalidad, fecha };
+  }
+
+  function sendToWhatsapp(data) {
+    const nombreCompleto = `${data.nombres} ${data.apellidos}`.trim() || 'Paciente';
+    const mensaje = `Hola Psico. Allison Rios, deseo agendar una cita.%0A%0A` +
+      `👤 *Nombre:* ${nombreCompleto}%0A` +
+      `📞 *Teléfono:* ${data.telefono || 'No especificado'}%0A` +
+      `✉️ *Correo:* ${data.correo || 'No especificado'}%0A` +
+      `🧠 *Servicio:* ${data.servicio}%0A` +
+      `📍 *Modalidad:* ${data.modalidad}%0A` +
+      `🗓️ *Fecha y Hora tentativa:* ${data.fecha}%0A%0A` +
+      `Agradezco me confirmes la disponibilidad. ¡Muchas gracias!`;
+
+    const whatsappUrl = `https://wa.me/51987654321?text=${mensaje}`;
+    window.open(whatsappUrl, '_blank');
+  }
+
+  if (whatsappQuickBtn) {
+    whatsappQuickBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      const data = getFormData();
+      sendToWhatsapp(data);
+    });
+  }
+
+  if (form) {
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const data = getFormData();
+
+      if (!data.nombres || !data.telefono) {
+        alert('Por favor, ingresa al menos tus Nombres y Teléfono de contacto.');
+        return;
+      }
+
+      // Mostrar modal de confirmación con detalles
+      const modalSummary = document.getElementById('success-summary-details');
+      if (modalSummary) {
+        modalSummary.innerHTML = `
+          <p><strong>Paciente:</strong> ${data.nombres} ${data.apellidos}</p>
+          <p><strong>Servicio:</strong> ${data.servicio}</p>
+          <p><strong>Modalidad:</strong> ${data.modalidad}</p>
+          <p><strong>Fecha reservada:</strong> ${data.fecha}</p>
+          <p><strong>Sede:</strong> Juan de la Fuente 625, Miraflores (Espacio Interior)</p>
+        `;
+      }
+
+      if (successModal) {
+        successModal.classList.add('open');
+      }
+
+      // Preparar enlace de WhatsApp en el modal
+      const modalWaBtn = document.getElementById('modal-whatsapp-confirm');
+      if (modalWaBtn) {
+        modalWaBtn.onclick = () => {
+          sendToWhatsapp(data);
+        };
+      }
+    });
+  }
+
+  if (closeSuccessBtn && successModal) {
+    closeSuccessBtn.addEventListener('click', () => {
+      successModal.classList.remove('open');
+      form.reset();
+    });
+  }
+}
+
+/* ==========================================================================
+   4. CARRITO DE COMPRAS (Caja de la Calma - S/. 99.99)
+   ========================================================================== */
+let cartItems = [];
+
+function initShoppingCart() {
+  const cartDrawer = document.getElementById('cart-drawer');
+  const cartOverlay = document.getElementById('cart-drawer-overlay');
+  const cartToggleBtn = document.getElementById('header-cart-toggle');
+  const cartCloseBtn = document.getElementById('cart-close-btn');
+  const cartItemsContainer = document.getElementById('cart-items-list');
+  const cartTotalAmount = document.getElementById('cart-total-amount');
+  const cartBadge = document.getElementById('cart-counter-badge');
+  const addCartBtn = document.getElementById('btn-add-caja-calma');
+  const checkoutBtn = document.getElementById('cart-checkout-whatsapp');
+
+  function openCart() {
+    if (cartDrawer && cartOverlay) {
+      cartDrawer.classList.add('open');
+      cartOverlay.classList.add('open');
+    }
+  }
+
+  function closeCart() {
+    if (cartDrawer && cartOverlay) {
+      cartDrawer.classList.remove('open');
+      cartOverlay.classList.remove('open');
+    }
+  }
+
+  if (cartToggleBtn) cartToggleBtn.addEventListener('click', openCart);
+  if (cartCloseBtn) cartCloseBtn.addEventListener('click', closeCart);
+  if (cartOverlay) cartOverlay.addEventListener('click', closeCart);
+
+  function renderCart() {
+    if (!cartItemsContainer) return;
+
+    if (cartItems.length === 0) {
+      cartItemsContainer.innerHTML = `
+        <div style="text-align: center; color: #94a3b8; padding: 3rem 1rem;">
+          <div style="font-size: 3rem; margin-bottom: 0.5rem;">🛍️</div>
+          <p>Tu carrito está actualmente vacío.</p>
+          <small>Agrega la "Caja de la Calma" para comenzar.</small>
+        </div>
+      `;
+      if (cartTotalAmount) cartTotalAmount.textContent = 'S/. 0.00';
+      if (cartBadge) cartBadge.textContent = '0';
+      return;
+    }
+
+    let total = 0;
+    let totalQty = 0;
+    cartItemsContainer.innerHTML = '';
+
+    cartItems.forEach((item, index) => {
+      total += item.price * item.quantity;
+      totalQty += item.quantity;
+
+      const itemCard = document.createElement('div');
+      itemCard.className = 'cart-item-card';
+      itemCard.innerHTML = `
+        <img src="${item.image}" alt="${item.name}" class="cart-item-img">
+        <div class="cart-item-info">
+          <div class="cart-item-name">${item.name}</div>
+          <div class="cart-item-price">S/. ${(item.price).toFixed(2)} c/u</div>
+          <div class="cart-qty-ctrls">
+            <button class="qty-btn" onclick="updateItemQty(${index}, -1)">-</button>
+            <span style="font-weight: 700; font-size: 0.9rem;">${item.quantity}</span>
+            <button class="qty-btn" onclick="updateItemQty(${index}, 1)">+</button>
+            <button style="margin-left: auto; color: #ef4444; font-size: 0.8rem; font-weight: 600;" onclick="removeItem(${index})">Eliminar</button>
+          </div>
+        </div>
+      `;
+      cartItemsContainer.appendChild(itemCard);
+    });
+
+    if (cartTotalAmount) cartTotalAmount.textContent = `S/. ${total.toFixed(2)}`;
+    if (cartBadge) cartBadge.textContent = totalQty;
+  }
+
+  window.updateItemQty = function(index, change) {
+    if (cartItems[index]) {
+      cartItems[index].quantity += change;
+      if (cartItems[index].quantity <= 0) {
+        cartItems.splice(index, 1);
+      }
+      renderCart();
+    }
+  };
+
+  window.removeItem = function(index) {
+    cartItems.splice(index, 1);
+    renderCart();
+  };
+
+  if (addCartBtn) {
+    addCartBtn.addEventListener('click', () => {
+      const existing = cartItems.find(i => i.id === 'caja-calma');
+      if (existing) {
+        existing.quantity += 1;
+      } else {
+        cartItems.push({
+          id: 'caja-calma',
+          name: 'Caja de la Calma (Kit Sensorial)',
+          price: 99.99,
+          quantity: 1,
+          image: 'https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?auto=format&fit=crop&w=400&q=80'
+        });
+      }
+      renderCart();
+      openCart();
+      showToast('¡"Caja de la Calma" agregada al carrito!');
+    });
+  }
+
+  if (checkoutBtn) {
+    checkoutBtn.addEventListener('click', () => {
+      if (cartItems.length === 0) {
+        alert('Tu carrito está vacío.');
+        return;
+      }
+      const itemsText = cartItems.map(i => `• ${i.name} (x${i.quantity}) - S/. ${(i.price * i.quantity).toFixed(2)}`).join('%0A');
+      const total = cartItems.reduce((acc, i) => acc + (i.price * i.quantity), 0).toFixed(2);
+      const text = `Hola Psico. Allison Rios, deseo comprar los siguientes productos:%0A%0A${itemsText}%0A%0A*Total:* S/. ${total}%0A%0A¿Podrían indicarme los datos de envío y medios de pago (Yape/Plin)?`;
+      window.open(`https://wa.me/51987654321?text=${text}`, '_blank');
+    });
+  }
+
+  renderCart();
+}
+
+/* ==========================================================================
+   5. SLIDER DE PRODUCTO (Caja de la Calma - 4 fotos/dots del wireframe)
+   ========================================================================== */
+function initProductSlider() {
+  const images = [
+    'https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?auto=format&fit=crop&w=900&q=80',
+    'https://images.unsplash.com/photo-1608571423902-eed4a5ad8108?auto=format&fit=crop&w=900&q=80',
+    'https://images.unsplash.com/photo-1506126613408-eca07ce68773?auto=format&fit=crop&w=900&q=80',
+    'https://images.unsplash.com/photo-1518241353330-0f7941c2d9b5?auto=format&fit=crop&w=900&q=80'
+  ];
+
+  let currentSlide = 0;
+  const slideImg = document.getElementById('product-main-slide-img');
+  const prevBtn = document.getElementById('product-slide-prev');
+  const nextBtn = document.getElementById('product-slide-next');
+  const dotsContainer = document.getElementById('product-slider-dots');
+
+  function updateSlide(index) {
+    currentSlide = (index + images.length) % images.length;
+    if (slideImg) {
+      slideImg.src = images[currentSlide];
+    }
+    const dots = dotsContainer?.querySelectorAll('.slider-dot');
+    dots?.forEach((dot, idx) => {
+      if (idx === currentSlide) dot.classList.add('active');
+      else dot.classList.remove('active');
+    });
+  }
+
+  if (dotsContainer) {
+    dotsContainer.innerHTML = '';
+    images.forEach((_, idx) => {
+      const dot = document.createElement('div');
+      dot.className = `slider-dot ${idx === 0 ? 'active' : ''}`;
+      dot.addEventListener('click', () => updateSlide(idx));
+      dotsContainer.appendChild(dot);
+    });
+  }
+
+  if (prevBtn) prevBtn.addEventListener('click', () => updateSlide(currentSlide - 1));
+  if (nextBtn) nextBtn.addEventListener('click', () => updateSlide(currentSlide + 1));
+}
+
+/* ==========================================================================
+   6. FAQ ACCORDION (Item 2 expandido por defecto como en el wireframe)
+   ========================================================================== */
+function initFaqAccordion() {
+  const faqItems = document.querySelectorAll('.faq-item');
+
+  faqItems.forEach((item, index) => {
+    const header = item.querySelector('.faq-header');
+    if (header) {
+      header.addEventListener('click', () => {
+        const isActive = item.classList.contains('active');
+        
+        // Opcional: cerrar los demás
+        faqItems.forEach(other => other.classList.remove('active'));
+
+        if (!isActive) {
+          item.classList.add('active');
+        }
+      });
+    }
+  });
+}
+
+/* ==========================================================================
+   7. REPRODUCTOR DE VIDEO INTERACTIVO (Wireframe 1)
+   ========================================================================== */
+function initVideoPlayer() {
+  const centerPlayBtn = document.getElementById('video-center-play-btn');
+  const ctrlPlayBtn = document.getElementById('video-ctrl-play');
+  const progressBar = document.getElementById('video-progress-fill');
+  const timeDisplay = document.getElementById('video-time-display');
+  const muteBtn = document.getElementById('video-ctrl-mute');
+
+  let isPlaying = false;
+  let currentTime = 14;
+  const duration = 92; // 1:32 total
+
+  function togglePlay() {
+    isPlaying = !isPlaying;
+    if (isPlaying) {
+      if (centerPlayBtn) centerPlayBtn.style.display = 'none';
+      if (ctrlPlayBtn) ctrlPlayBtn.textContent = '⏸';
+      showToast('Reproduciendo: Mensaje de bienvenida de Allison Rios');
+    } else {
+      if (centerPlayBtn) centerPlayBtn.style.display = 'flex';
+      if (ctrlPlayBtn) ctrlPlayBtn.textContent = '▶';
+    }
+  }
+
+  if (centerPlayBtn) centerPlayBtn.addEventListener('click', togglePlay);
+  if (ctrlPlayBtn) ctrlPlayBtn.addEventListener('click', togglePlay);
+
+  if (muteBtn) {
+    let muted = false;
+    muteBtn.addEventListener('click', () => {
+      muted = !muted;
+      muteBtn.textContent = muted ? '🔇' : '🔊';
+    });
+  }
+}
+
+/* ==========================================================================
+   8. TESTIMONIOS (3D Stack / Carrusel - Wireframe 4)
+   ========================================================================== */
+function initTestimonialsSlider() {
+  const testimonials = [
+    {
+      stars: '★★★★★',
+      text: '“Llegué a consulta sintiendo que no podía más con el estrés laboral y los ataques de pánico. Allison me brindó herramientas prácticas desde la primera sesión. Hoy siento que recuperé el control y la calma en mi vida.”',
+      author: 'Camila V.',
+      tag: 'Terapia Individual - Presencial'
+    },
+    {
+      stars: '★★★★★',
+      text: '“La terapia de parejas con Allison salvó nuestra relación. Nos enseñó a comunicarnos sin agredirnos y a escucharnos con empatía genuina. Su profesionalismo y calidez marcaron toda la diferencia.”',
+      author: 'Rodrigo & Andrea',
+      tag: 'Terapia de Parejas - Miraflores'
+    },
+    {
+      stars: '★★★★★',
+      text: '“Tenía miedo de iniciar terapia online por si era fría o distante, pero la conexión con Allison fue inmediata. Su consultorio virtual es un refugio seguro donde puedo ser completamente honesta conmigo misma.”',
+      author: 'Valeria M.',
+      tag: 'Terapia Online - Desde Arequipa'
+    },
+    {
+      stars: '★★★★★',
+      text: '“La Caja de la Calma y las sesiones de evaluación cambiaron mis hábitos por completo. Por primera vez logré vencer la ansiedad antes de mis exámenes finales de la universidad.”',
+      author: 'Mateo S.',
+      tag: 'Asesoría Académica & Bienestar'
+    }
+  ];
+
+  let currentIndex = 0;
+  const cardElement = document.getElementById('current-testimonial-card');
+  const prevBtn = document.getElementById('testimonial-prev-btn');
+  const nextBtn = document.getElementById('testimonial-next-btn');
+
+  function renderTestimonial(index) {
+    currentIndex = (index + testimonials.length) % testimonials.length;
+    const t = testimonials[currentIndex];
+
+    if (cardElement) {
+      cardElement.style.opacity = '0';
+      cardElement.style.transform = 'scale(0.96)';
+
+      setTimeout(() => {
+        cardElement.innerHTML = `
+          <div class="testimonial-stars">${t.stars}</div>
+          <p class="testimonial-quote">${t.text}</p>
+          <div class="testimonial-author">
+            <div class="author-avatar">${t.author.charAt(0)}</div>
+            <div class="author-info">
+              <h4>${t.author}</h4>
+              <span>${t.tag}</span>
+            </div>
+          </div>
+        `;
+        cardElement.style.opacity = '1';
+        cardElement.style.transform = 'scale(1)';
+      }, 150);
+    }
+  }
+
+  if (prevBtn) prevBtn.addEventListener('click', () => renderTestimonial(currentIndex - 1));
+  if (nextBtn) nextBtn.addEventListener('click', () => renderTestimonial(currentIndex + 1));
+}
+
+/* ==========================================================================
+   9. MODAL DE CRISIS / EMERGENCIA (Danger Button)
+   ========================================================================== */
+function initCrisisModal() {
+  const crisisBtn = document.getElementById('faq-danger-crisis-btn');
+  const crisisModal = document.getElementById('crisis-modal-overlay');
+  const closeBtn = document.getElementById('close-crisis-modal-btn');
+
+  if (crisisBtn && crisisModal) {
+    crisisBtn.addEventListener('click', () => {
+      crisisModal.classList.add('open');
+    });
+  }
+
+  if (closeBtn && crisisModal) {
+    closeBtn.addEventListener('click', () => {
+      crisisModal.classList.remove('open');
+    });
+  }
+
+  if (crisisModal) {
+    crisisModal.addEventListener('click', (e) => {
+      if (e.target === crisisModal) {
+        crisisModal.classList.remove('open');
+      }
+    });
+  }
+}
+
+/* ==========================================================================
+   10. TOAST NOTIFICACIÓN
+   ========================================================================== */
+function showToast(message) {
+  let toast = document.getElementById('app-toast');
+  if (!toast) {
+    toast = document.createElement('div');
+    toast.id = 'app-toast';
+    toast.className = 'toast-notice';
+    document.body.appendChild(toast);
+  }
+
+  toast.innerHTML = `<span>✨</span><span>${message}</span>`;
+  toast.classList.add('show');
+
+  setTimeout(() => {
+    toast.classList.remove('show');
+  }, 3200);
+}
